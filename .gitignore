@@ -91,3 +91,5 @@ target/
 *.log
 .DS_Store
 Thumbs.db
+
+chat_logs/*

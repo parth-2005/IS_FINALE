@@ -178,6 +178,12 @@ class MessagingService:
             m_int = pow(c_int, d, n)
             aes_key = m_int.to_bytes(key_len, "big")
             print(f"Derived AES key ({len(aes_key)} bytes) for client {client_address}")
+            # DEBUG: show AES key (hex and base64) for troubleshooting
+            try:
+                print(f"DEBUG AES key (hex): {aes_key.hex()}")
+                print(f"DEBUG AES key (base64): {base64.b64encode(aes_key).decode()}")
+            except Exception:
+                pass
 
             # --- SECURE AUTHENTICATION ---
             while True:
@@ -315,6 +321,13 @@ class MessagingService:
             n_bytes = (n.bit_length() + 7) // 8
             key_len = 16  # AES-128
             aes_key = generate_aes_key(key_len)
+            # DEBUG: show AES key locally before wrapping (hex and base64)
+            try:
+                print(f"Generated AES key ({len(aes_key)} bytes) locally")
+                print(f"DEBUG AES key (hex): {aes_key.hex()}")
+                print(f"DEBUG AES key (base64): {base64.b64encode(aes_key).decode()}")
+            except Exception:
+                pass
             m_int = int.from_bytes(aes_key, "big")
             c_int = pow(m_int, e, n)
             c_bytes = c_int.to_bytes(n_bytes, "big")
